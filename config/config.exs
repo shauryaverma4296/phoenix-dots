@@ -13,10 +13,10 @@ config :dots,
 # Configures the endpoint
 config :dots, DotsWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "bUIvT0RKwrqi+BpAF2JlhIuE7BVwDXW3Cb4E79mQWVCs6cuWzS/mxUKpHNpDBgL4",
+  secret_key_base: "Gaq3T5onr5eWizq+b00k7mfMJrexV9vjv+REQioHdJBdB2RANSyhGDbV+WRabS0H",
   render_errors: [view: DotsWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Dots.PubSub,
-  live_view: [signing_salt: "ZsW9oaKz"]
+  live_view: [signing_salt: "ICoYw3lI"]
 
 # Configures Elixir's Logger
 config :logger, :console,

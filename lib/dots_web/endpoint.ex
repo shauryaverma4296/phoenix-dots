@@ -7,7 +7,7 @@ defmodule DotsWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_dots_key",
-    signing_salt: "CC8bY7MT"
+    signing_salt: "F8QJOEwP"
   ]
 
   socket "/socket", DotsWeb.UserSocket,
