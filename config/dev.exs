@@ -2,9 +2,9 @@ use Mix.Config
 
 # Configure your database
 config :dots, Dots.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "dots_dev",
+  username: "shauryaverma",
+  password: "",
+  database: "postgres",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
