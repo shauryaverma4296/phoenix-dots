@@ -3,6 +3,58 @@ defmodule DotsWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    Phoenix.PubSub.subscribe(Dots.PubSub, "dots")
+
+    dots =
+      DynamicSupervisor.which_children(Dots.DotSupervisor)
+      |> Enum.map(fn {_id, pid, _typr, _modules} -> :sys.get_state(pid) end)
+
+    {:ok, assign(socket, dots: dots, reset_counter: 0)}
+  end
+
+  @impl true
+  def handle_event("create", %{"amount" => amount}, socket) do
+    amount = String.to_integer(amount)
+
+    Enum.each(1..amount, fn _ ->
+      DynamicSupervisor.start_child(Dots.DotSupervisor, Dots.Actor)
+    end)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("move", _values, socket) do
+    DynamicSupervisor.which_children(Dots.DotSupervisor)
+    |> Enum.each(fn {_id, pid, _type, _modules} -> Process.send(pid, :move, []) end)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("reset", _values, socket) do
+    DynamicSupervisor.which_children(Dots.DotSupervisor)
+    |> Enum.each(fn {_id, pid, _type, _modules} ->
+      DynamicSupervisor.terminate_child(Dots.DotSupervisor, pid)
+    end)
+
+    {:noreply, assign(socket, dots: [], reset_counter: socket.assigns[:reset_counter] + 1)}
+  end
+
+  def handle_event("error", _values, socket) do
+    DynamicSupervisor.which_children(Dots.DotSupervisor)
+    |> Enum.each(fn {_id, pid, _type, _modules} -> Process.send(pid, :error, []) end)
+
+    {:noreply, assign(socket, dots: [], reset_counter: socket.assigns[:reset_counter] + 1)}
+  end
+
+  @impl true
+  def handle_info({:move, dot}, socket) do
+    {:noreply, assign(socket, dots: [dot])}
+
+    # {:noreply, push_event(socket, "move", %{x: dot.x, y: dot.y, pid: "#{inspect(dot.pid)}"})}
+  end
+
+  @impl true
+  def handle_info({:new, dot}, socket) do
+    {:noreply, assign(socket, dots: [dot])}
   end
 end

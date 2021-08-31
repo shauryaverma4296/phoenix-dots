@@ -4,6 +4,12 @@
 <button phx-click="reset" class="button-danger">Reset</button>
 <button phx-click="error" class="button-danger">Create Error</button>
 
-<section class="phx-hero" phx-update="append"  phx-hook="Dots">
-  <%# TODO: Need to add canvas %>
+<section class="phx-hero" phx-update="append" id="canvas-<%= @reset_counter %>" phx-hook="Dots">
+  <%= for dot <- @dots do %>
+    <div
+      class="dot"
+      id="dot-<%= String.replace("#{inspect dot.pid}", ~r/[#PID<>]/, "") %>"
+      style="background-color: hsl(<%= dot.hue %>, 83%, 53%); left: <%= dot.x %>px; top: <%= dot.y %>px; transition: left 1s ease-in-out, top 1s ease-in-out;"
+    ></div>
+  <% end %>
 </section>

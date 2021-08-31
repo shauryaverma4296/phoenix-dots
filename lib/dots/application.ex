@@ -14,7 +14,9 @@ defmodule Dots.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Dots.PubSub},
       # Start the Endpoint (http/https)
-      DotsWeb.Endpoint
+      DotsWeb.Endpoint,
+      {DynamicSupervisor, strategy: :one_for_one, name: Dots.DotSupervisor, max_restarts: 1000},
+      Dots.Canvas
       # Start a worker by calling: Dots.Worker.start_link(arg)
       # {Dots.Worker, arg}
     ]
