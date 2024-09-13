@@ -7,7 +7,7 @@ defmodule Dots.Actor do
   end
 
   def init(_opts) do
-    x = :rand.uniform(800)
+    x = :rand.uniform(700)
     y = :rand.uniform(600)
     hue = :rand.uniform(360)
 
@@ -21,14 +21,14 @@ defmodule Dots.Actor do
   end
 
   def handle_info(:move, old_dot) do
-    x = :rand.uniform(800)
+    IO.inspect(label: "Handle event 2 ")
+
+    x = :rand.uniform(700)
     y = :rand.uniform(600)
 
     pid = GenServer.whereis(Dots.Canvas)
 
-    new_dot =
-      %Dot{old_dot | x: x, y: y}
-      |> IO.inspect(label: "Dot info before move")
+    new_dot = %Dot{old_dot | x: x, y: y}
 
     t = :rand.uniform(500) + 500
 

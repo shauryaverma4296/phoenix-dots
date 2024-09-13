@@ -88,6 +88,11 @@
   margin: -1rem 0 2rem;
 }
 
+.button-danger {
+  background-color: red;
+  border: none;
+}
+
 .dot {
   background-color: #000;
   border-radius: 50%;

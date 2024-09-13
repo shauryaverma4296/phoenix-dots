@@ -17,6 +17,8 @@ defmodule Dots.Canvas do
   end
 
   def handle_info({:move, %Dot{} = dot}, state) do
+    IO.inspect(label: "Handle event 3")
+
     Phoenix.PubSub.broadcast!(Dots.PubSub, "dots", {:move, dot})
     {:noreply, state}
   end

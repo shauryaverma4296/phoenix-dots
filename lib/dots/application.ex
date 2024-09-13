@@ -12,7 +12,7 @@ defmodule Dots.Application do
       # Start the Telemetry supervisor
       DotsWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Dots.PubSub},
+      {Phoenix.PubSub, [name: Dots.PubSub, adapter: Phoenix.PubSub.PG2]},
       # Start the Endpoint (http/https)
       DotsWeb.Endpoint,
       {DynamicSupervisor, strategy: :one_for_one, name: Dots.DotSupervisor, max_restarts: 1000},
